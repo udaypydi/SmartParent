@@ -10,7 +10,8 @@ import {
   Navigator,
   TouchableHighlight,
   BackAndroid,
-  ScrollView
+  ScrollView,
+  AsyncStorage,
 } from 'react-native';
 
 var _navigator;
@@ -19,7 +20,6 @@ import Container from './Container';
 import Button from './Button';
 import Label from './Label';
 import ImageContainer from './ImageContainer';
-import {AsyncStorage} from 'react';
 import RegisterView from './RegisterView';
 
 
@@ -41,6 +41,7 @@ _navigate(){
 
 }
 _navigate2(){
+AsyncStorage.setItem("username", this.state.userName);
 this.props.navigator.push({
               name: 'CheckList',
               })
