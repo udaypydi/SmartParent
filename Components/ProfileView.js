@@ -54,45 +54,45 @@ const {profile, profile:{name,admission_no,dob,classes,section,address,contact}}
 
 <Container>
     <Text
-     style={styles.textInput}> Name : {name}
+     style={styles.textInput}> Name : {profile.name}
     </Text>
 </Container>
 
 <Container>
     <Text
-     style={styles.textInput}> Admission No. {admission_no}
+     style={styles.textInput}> Admission No. {profile.admission_no}
     </Text>
 </Container>
 
 <Container>
     <Text
-     style={styles.textInput}> D.O.B :  {dob}
-    </Text>
-</Container>
-
-
-<Container>
-    <Text
-     style={styles.textInput}> Class :  {classes}
-    </Text>
-</Container>
-
-<Container>
-    <Text
-     style={styles.textInput}> Section :  {section}
+     style={styles.textInput}> D.O.B :  {profile.dob}
     </Text>
 </Container>
 
 
 <Container>
     <Text
-     style={styles.textInput}> Address :   {address}
+     style={styles.textInput}> Class :  {profile.classes}
     </Text>
 </Container>
 
 <Container>
     <Text
-     style={styles.textInput}> Contact :   {contact}
+     style={styles.textInput}> Section :  {profile.section}
+    </Text>
+</Container>
+
+
+<Container>
+    <Text
+     style={styles.textInput}> Address :   {profile.address}
+    </Text>
+</Container>
+
+<Container>
+    <Text
+     style={styles.textInput}> Contact :   {profile.contact}
     </Text>
 </Container>
 
