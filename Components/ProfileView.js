@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 
 import {
   StyleSheet,
@@ -12,6 +11,7 @@ import {
   TouchableHighlight,
   BackAndroid,
   ScrollView,
+  AsyncStorage,
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
@@ -20,30 +20,30 @@ import Container from './Container';
 import Button from './Button';
 import Label from './Label';
 import ImageContainer from './ImageContainer';
+import profiles from '../data'
 
-@connect(
-  state => ({
-    profiles: state.profiles,
-  }),
-  dispatch => ({
-      refresh: () => dispatch({type: 'GET_PROFILE_DATA'}),
-    }),
-)
 
 export default class ProfileView extends Component {
+constructor(props) {
+    super(props);
+    
+  this.state = {
+    myData: '',
+  }
+    }
+
+  async componentDidMount() {
+  let response = await fetch('http://10.0.2.2:3001/v1/profiles.json');
+  let rsponseJson = await response.json();
+  this.setState({ myData: responseJson }); 
+  }
 
 render() {
-const { profiles} = this.props;
-const {profile, profile:{name,admission_no,dob,classes,section,address,contact}}=this.props;
+    if(this.state.myData) {
     return (
+
     <ScrollView style={styles.scroll}>
-    {
-     profiles.map((profile,index)=> <ProfileView
-     profile={profile}
-     key={index}
-     />)
-     }
-        <ImageContainer>
+  <ImageContainer>
 
         <Image
                   style={{width:110,height: 110, justifyContent: 'center', alignItems: 'center',
@@ -54,50 +54,58 @@ const {profile, profile:{name,admission_no,dob,classes,section,address,contact}}
 
 <Container>
     <Text
-     style={styles.textInput}> Name : {name}
+     style={styles.textInput}> Name : {this.state.myData.profiles[0].name}
     </Text>
 </Container>
 
 <Container>
     <Text
-     style={styles.textInput}> Admission No. {admission_no}
+     style={styles.textInput}> Admission No: {this.state.myData.profiles[0].admission_no}
     </Text>
 </Container>
 
 <Container>
     <Text
-     style={styles.textInput}> D.O.B :  {dob}
-    </Text>
-</Container>
-
-
-<Container>
-    <Text
-     style={styles.textInput}> Class :  {classes}
-    </Text>
-</Container>
-
-<Container>
-    <Text
-     style={styles.textInput}> Section :  {section}
+     style={styles.textInput}> D.O.B : {this.state.myData.profiles[0].dob}
     </Text>
 </Container>
 
 
 <Container>
     <Text
-     style={styles.textInput}> Address :   {address}
+     style={styles.textInput}> Class : {this.state.myData.profiles[0].class}
     </Text>
 </Container>
 
 <Container>
     <Text
-     style={styles.textInput}> Contact :   {contact}
+     style={styles.textInput}> Section : {this.state.myData.profiles[0].section}
+    </Text>
+</Container>
+
+
+<Container>
+    <Text
+     style={styles.textInput}> Address : {this.state.myData.profiles[0].address}
+    </Text>
+</Container>
+
+<Container>
+    <Text
+     style={styles.textInput}> Contact : {this.state.myData.profiles[0].contact}
     </Text>
 </Container>
 
         </ScrollView>
+
     );
+    }
+    else{
+    return(
+    <Container>
+    </Container>
+    );
+    }
 
   }
 
