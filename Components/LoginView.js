@@ -12,9 +12,11 @@ import {
   BackAndroid,
   ScrollView
 } from 'react-native';
+import moment from 'moment';
 
 var _navigator;
 
+import Profile from '../models/profile';
 import Container from './Container';
 import Button from './Button';
 import Label from './Label';
@@ -41,6 +43,15 @@ _navigate(){
 
 }
 _navigate2(){
+  (req, res, next) => {
+  // Find all movies and return json response
+  Profile.find({'email': this.state.userName}).lean().exec((err, profiles) => res.json(
+    // Iterate through each movie
+    { profiles: profiles.map(profile => ({
+      ...profile,
+     }))}
+  ));
+}
 this.props.navigator.push({
               name: 'CheckList',
               })
